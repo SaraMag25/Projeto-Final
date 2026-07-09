@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.controleestudos.data.StudyDatabase
 import com.example.controleestudos.ui.AddStudyScreen
 import com.example.controleestudos.ui.StudyListScreen
+import com.example.controleestudos.ui.MuralScreen
 import com.example.controleestudos.ui.theme.ControleEstudosTheme
 import com.example.controleestudos.viewmodel.StudyViewModel
 import com.example.controleestudos.viewmodel.StudyViewModelFactory
@@ -28,15 +29,24 @@ class MainActivity : ComponentActivity() {
             ControleEstudosTheme {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "list") {
+
                     composable("list") {
                         StudyListScreen(
                             viewModel = viewModel,
-                            onNavigateToAdd = { navController.navigate("add") }
+                            onNavigateToAdd = { navController.navigate("add") },
+                            onNavigateToMural = { navController.navigate("mural") } // <-- Adicionamos a rota para a nova tela
                         )
                     }
+
                     composable("add") {
                         AddStudyScreen(
                             viewModel = viewModel,
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+
+                    composable("mural") {
+                        MuralScreen(
                             onBack = { navController.popBackStack() }
                         )
                     }
